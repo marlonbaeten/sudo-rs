@@ -60,6 +60,7 @@ struct Cli {
         short = 'H',
         long = "set-home",
         help = "set HOME variable to target user's home dir",
+        default_value_t = true,
         action
     )]
     set_home: bool,

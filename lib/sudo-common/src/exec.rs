@@ -10,6 +10,7 @@ pub fn exec(context: Context) -> Result<ExitStatus, Error> {
         .args(context.command.arguments)
         .uid(context.target_user.uid)
         .gid(context.target_user.gid)
+        .env_clear()
         .envs(context.target_environment)
         .status()
         .map_err(|_| Error::Exec)
