@@ -80,9 +80,13 @@ fn get_extra_env(context: &Context) -> Environment {
 fn filter_env(preserve_env_list: Vec<&str>, environment: &Environment) -> Environment {
     let mut filtered_env = Environment::new();
 
-    for name in preserve_env_list {
-        if let Some(value) = environment.get(name) {
-            filtered_env.insert(name.to_string(), value.to_string());
+    for name_pattern in preserve_env_list {
+        if let Ok(pattern) = glob::Pattern::new(name_pattern) {
+            for (name, value) in environment {
+                if pattern.matches(name) {
+                    filtered_env.insert(name.to_string(), value.to_string());
+                }
+            }
         }
     }
 
